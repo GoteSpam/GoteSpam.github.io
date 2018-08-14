@@ -99,20 +99,47 @@
                     <br />
                     <h5>Hello there, dear visitor!</h5>
                     <h5>Let me, creator and owner of this site, guide you through this one.</h5>
-                    <h5>On this page you'll find some brief info about me.</h5>
-                    <h5><p class="text-justify">As long as the main page is more like CV, and you might want to know me better - I'll leave some various links to my biography, projects, notes and other stuff throughtout this page.</p></h5>
-                    <h5><p class="text-justify">And of course, these links will be accessible via navigation bar in upper right corner. And if you want to switch language - you can do it there as well!</p></h5>
+                    <h5>On this page you'll find some brief info about me.</h5>                    
+                    <br />
+                    <h5><p class="text-justify">As long as the main page is more like CV, and you might want to know me better - I'll leave some various links to my biography, projects, notes and other stuff throughtout this page. And of course, these links will be accessible via navigation bar in upper right corner. And if you want to switch language - you can do it there as well!</p></h5>
                     <h5><p class="text-justify">By the way, everything was described and translated by myself, so if you'll find some mistakes, bugs or something to be considered as "thorn in one's side" feel free to contact me. I'll fix it as soon as possible!</p></h5>
+                    <br />
                     <h5>So... I guess it's everything you should know for now. Enjoy yourself here!</h5>
                     <br />
                 </div>
             </div>
         </div>
 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <div id="piechart"></div>        
+        <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        // Draw the chart and set the chart values
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['I am smart', 4],
+          ['I am self-assured', 4],
+          ['I am in love with complex things', 4],
+          ['I am strong technician', 4],
+          ['I dunno why, rly', 4]
+        ]);
+          // Optional; add a title and set the width and height of the chart
+          var options = {'title':'Why am I so awesome', 'width':550, 'height':400};
+          // Display the chart inside the <div> element with id="piechart"
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+          chart.draw(data, options);
+        }
+        </script>
 
 
     <!-- Optional JavaScript -->
-    
+
+    <!-- Google piecharts JS -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
