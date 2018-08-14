@@ -1,3 +1,21 @@
 body{
     height: 2000px;
 }
+
+
+
+
+.containerTest {
+    background-image: url(http://hdqwalls.com/download/minimalism-triangle-art-hd-2048x1152.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    color: white
+  }
+
+
+  
