@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-<!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,13 +11,145 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/styles.css">
 
+    <!-- Title of site -->
+    <title>Ivan Shirokov — personal page</title>
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="images/favicon1.png"/>
 
-    <title>Ivan Shirokov — personal page</title>
+    <!-- JavaScript starts here -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123052310-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-123052310-1');
+    </script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter49814221 = new Ya.Metrika2({
+                    id:49814221,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/tag.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks2");
+</script>
+<noscript>
+    <div>
+        <img src="https://mc.yandex.ru/watch/49814221" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+</noscript>
+<!-- JavaScript ends here -->
 </head>
 
 <body>
+    <script>
+    $(document).ready(function(e) {
+    var os = (function() {
+    var ua = navigator.userAgent.toLowerCase();
+    //console.log(ua);
+    return {
+      isWin: /windows/.test(ua),
+      isWin2K: /windows nt 5.0/.test(ua),
+      isXP: /windows nt 5.1/.test(ua),
+      isVista: /windows nt 6.0/.test(ua),
+      isWin7: /windows nt 6.1/.test(ua),
+      isWin8: /windows nt 6.2/.test(ua),
+      isMac: /macintosh/.test(ua)
+    };
+  }());
+  var animateSpeed = 500;
+  if(os.isMac) {
+    animateSpeed = 600;
+  }
+  
+  /*Валик*/
+  var rollHPos = 0,
+  scrollTopPosition = $(document).scrollTop(),
+  docHeight = $(document).height(),
+  winHeight = $(window).height(),
+  rollWinStep = Math.floor(winHeight / (Math.floor(docHeight / winHeight)));
+  //console.log(docHeight);
+  //Движение за мышкой
+  /*$(this).mousemove(function(e){
+    if( e.pageY > 0 && e.pageY < docHeight ) goRoll(e.pageY, true);		
+  });*/
+  //Движение по скролу
+  $(document).scroll(function(){
+    goRoll($(document).scrollTop(), false);		
+  });
+  
+  $("#roll").click(function(){
+    goRoll(0, false);
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    
+  });
+  $(document).mousemove(function(e){
+    //console.log($(this).height() + " : " + e.pageY);		
+  });
+  function goRoll( STP, mousemove ){
+    docHeight = $(document).height();
+    winHeight = $(window).height();
+    if( mousemove ) animateSpeed = 0;
+    //console.log(docHeight)
+    //Крутим валик вниз
+    if( scrollTopPosition > $(document).scrollTop() ){
+      if( rollHPos == 0 ) rollHPos = -946;
+      else rollHPos += 86;
+    }
+    //Крутим валик вверх
+    else{
+      if( rollHPos == -946 ) rollHPos =  0;
+      else rollHPos -= 86;
+    }
+    //Запоминаем позицию скролла относительно верха страницы
+    scrollTopPosition = STP;
+    rollCorrectPos = STP == (docHeight - winHeight) ? 90 : 0;
+    //Визуализируем
+    $("#roll").css({"background-position-y": (rollHPos).toString() + "px"});
+    perOfDocScroll = Math.floor(scrollTopPosition/((docHeight - winHeight) / 100));
+    //setTimeout(function(){
+    if( !mousemove ){
+      //console.log(docHeight);
+      $("#roll").stop().animate({"margin-top": + Math.floor(((winHeight) / 100 * perOfDocScroll)) - 1 + "px", "top" : (scrollTopPosition - rollCorrectPos) + "px"}, animateSpeed);
+      $("#paint-line").stop().animate({height: + Math.floor(((winHeight) / 100 * perOfDocScroll)) + (scrollTopPosition - rollCorrectPos) + "px"}, animateSpeed);
+    }
+    else{
+      $("#roll").stop().animate({"top" : (scrollTopPosition - rollCorrectPos - 90) + "px"}, animateSpeed);
+      $("#paint-line").stop().animate({height: (scrollTopPosition - rollCorrectPos - 90 + 1) + "px"}, animateSpeed);
+    }
+      
+    
+    //}, 100);
+
+  }
+  /*Валик*/
+  
+});
+    </script>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
         <a class="navbar-brand" href="#">
             <img src="images/favicon2.png" width="48" height="48" class="d-inline-block align-center" alt="">
             Ivan Shirokov
@@ -67,7 +199,8 @@
             </form>
             -->
         </div>
-      </nav>
+        </div>
+    </nav>
     
       
       <div class="container">
@@ -83,19 +216,16 @@
                           </tr>
                         </tbody>
                       </table>
-            <!--
-            <h1>Ivan Shirokov</h1>
-            <h3>ICT engineer, sysadmin, developer, electronics amateur</h3>
-            <h5>(also Jack-of-all-Trades and secretly - superhero)</h5>
-            -->
           </div>
           <div class="col">
-            <img src="images/myPhoto.jpg" class="img-fluid" alt="Ivan Shirokov"> 
+                <div class="float-right">
+                    <img src="images/myPhoto.jpg" width="900" height="900" class="img-fluid" alt="Ivan Shirokov"> 
+                </div>
           </div>
         </div>
       </div>
 
-      <div class="containerTest">
+      <div class="GScontainer0">
       <div class="container">
             <div class="row">
               <div class="col">
@@ -114,95 +244,258 @@
         </div>
     </div>
 
-    <div class="container">        
-            <div class="row">                
-                    <div class="col">
-                    <br />
-                    <h1>Alrighty then, let us begin</h1>
-                    <h3>I'll answer questions like "who da hell are u" and "why should I be interested"</h3>
-                    <h5>Name's Ivan, and I am awesome.</h5>
-                    <h5>On a piechart, you can see why</h5>
+    <div class="container py-2">
+            <h2 class="text-center text-muted py-3">Кто таков, чем знаменит</h2>
+        
+            <!-- timeline item 1 -->
+            <div class="row">
+                <!-- timeline item 1 left dot -->
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
                     </div>
-                    
-        <div class="col">
-                <div id="piechart"></div>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    // Load google charts
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
-                    
-                    // Draw the chart and set the chart values
-                    function drawChart() {
-                      var data = google.visualization.arrayToDataTable([
-                      ['Task', 'Hours per Day'],
-                      ['Self-assured', 2],
-                      ['Highly trained', 2],
-                      ['Well-qualified', 2],
-                      ['Strong-willed', 2],
-                      ['Misanthropic', 8],
-                      ['I have a big dick', 8]
-                    ]);
-                    
-                      // Optional; add a title and set the width and height of the chart
-                      var options = {'title':'Why am I so awesome', 'width':600, 'height':400};
-                    
-                      // Display the chart inside the <div> element with id="piechart"
-                      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                      chart.draw(data, options);
-                    }
-                    </script>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-success">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <!-- timeline item 1 event content -->
+                <div class="col py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted">June 2015 - July 2016</div>
+                            <h4 class="card-title text-muted">IT specialist</h4>
+                            <p class="card-text">At "Sedmoi Kontinent" - Grocery retail</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 2 -->
+            <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-success">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col py-2">
+                    <div class="card border-success shadow">
+                        <div class="card-body">
+                            <div class="float-right text-success">Tue, Jan 10th 2019 8:30 AM</div>
+                            <h4 class="card-title text-success">Day 2 Sessions</h4>
+                            <p class="card-text">Sign-up for the lessons and speakers that coincide with your course syllabus. Meet and greet with instructors.</p>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" data-target="#t2_details" data-toggle="collapse">Show Details ▼</button>
+                            <div class="collapse border" id="t2_details">
+                                <div class="p-2 text-monospace">
+                                    <div>08:30 - 09:00 Breakfast in CR 2A</div>
+                                    <div>09:00 - 10:30 Live sessions in CR 3</div>
+                                    <div>10:30 - 10:45 Break</div>
+                                    <div>10:45 - 12:00 Live sessions in CR 3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 3 -->
+            <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-success">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted">Wed, Jan 11th 2019 8:30 AM</div>
+                            <h4 class="card-title">Day 3 Sessions</h4>
+                            <p>Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next level irony ennui twee squid fap selvage. Meggings flannel Brooklyn literally small batch, mumblecore PBR try-hard kale chips. Brooklyn vinyl lumbersexual
+                                bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify mustache. 3 wolf moon hashtag church-key Odd Future. Austin messenger bag normcore, Helvetica Williamsburg sartorial tote bag distillery Portland before
+                                they sold out gastropub taxidermy Vice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 4 -->
+            <div class="row">
+                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-light border">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted">Thu, Jan 12th 2019 11:30 AM</div>
+                            <h4 class="card-title">Day 4 Wrap-up</h4>
+                            <p>Join us for lunch in Bootsy's cafe across from the Campus Center.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
         </div>
+        <!--container-->
+        
+        <hr>
+        
+        <div class="container py-2">
+            
+            <!-- timeline item 1 -->
+            <div class="row no-gutters">
+                <div class="col-sm"> <!--spacer--> </div>
+                <!-- timeline item 1 center dot -->
+                <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-light border">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <!-- timeline item 1 event content -->
+                <div class="col-sm py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted small">Jan 9th 2019 7:00 AM</div>
+                            <h4 class="card-title text-muted">Day 1 Orientation</h4>
+                            <p class="card-text">Welcome to the campus, introduction and get started with the tour.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 2 -->
+            <div class="row no-gutters">
+                <div class="col-sm py-2">
+                    <div class="card border-success shadow">
+                        <div class="card-body">
+                            <div class="float-right text-success small">Jan 10th 2019 8:30 AM</div>
+                            <h4 class="card-title text-success">Day 2 Sessions</h4>
+                            <p class="card-text">Sign-up for the lessons and speakers that coincide with your course syllabus. Meet and greet with instructors.</p>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" data-target="#t22_details" data-toggle="collapse">Show Details ▼</button>
+                            <div class="collapse border" id="t22_details">
+                                <div class="p-2 text-monospace">
+                                    <div>08:30 - 09:00 Breakfast in CR 2A</div>
+                                    <div>09:00 - 10:30 Live sessions in CR 3</div>
+                                    <div>10:30 - 10:45 Break</div>
+                                    <div>10:45 - 12:00 Live sessions in CR 3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-success">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-sm"> <!--spacer--> </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 3 -->
+            <div class="row no-gutters">
+                <div class="col-sm"> <!--spacer--> </div>
+                <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-light border">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-sm py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted small">Jan 11th 2019 8:30 AM</div>
+                            <h4 class="card-title">Day 3 Sessions</h4>
+                            <p>Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo Park Godard kogi, next level irony ennui twee squid fap selvage. Meggings flannel Brooklyn literally small batch, mumblecore PBR try-hard kale chips. Brooklyn vinyl lumbersexual
+                                bicycle rights, viral fap cronut leggings squid chillwave pickled gentrify mustache.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <!-- timeline item 4 -->
+            <div class="row no-gutters">
+                <div class="col-sm py-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right text-muted small">Jan 12th 2019 11:30 AM</div>
+                            <h4 class="card-title">Day 4 Wrap-up</h4>
+                            <p>Join us for lunch in Bootsy's cafe across from the Campus Center.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1 text-center flex-column d-none d-sm-flex">
+                    <div class="row h-50">
+                        <div class="col border-right">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <h5 class="m-2">
+                        <span class="badge badge-pill bg-light border">&nbsp;</span>
+                    </h5>
+                    <div class="row h-50">
+                        <div class="col">&nbsp;</div>
+                        <div class="col">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-sm"> <!--spacer--> </div>
+            </div>
+            <!--/row-->
         </div>
-    </div>
-</div>
-
 
     <!-- Optional JavaScript -->
 
-    <!-- Google piecharts JS -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123052310-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-123052310-1');
-    </script>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function() {
-            try {
-                w.yaCounter49814221 = new Ya.Metrika2({
-                    id:49814221,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true,
-                    webvisor:true
-                });
-            } catch(e) { }
-        });
-
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://mc.yandex.ru/metrika/tag.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else { f(); }
-    })(document, window, "yandex_metrika_callbacks2");
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/49814221" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </body>
 
 </html>
